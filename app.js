@@ -499,5 +499,91 @@ Answer : c`;
 
   rawInput.addEventListener("input", schedulePersist);
 
+  const FORMAT_MODAL_DISMISSED = "mcq-ui-format-guide-dismissed";
+
+  function initFormatGuide() {
+    const modal = document.getElementById("format-modal");
+    const promptEl = document.getElementById("format-prompt-text");
+    const toast = document.getElementById("format-copy-toast");
+    const btnOpen = document.getElementById("btn-open-format-guide");
+    const btnCopy = document.getElementById("btn-copy-format-prompt");
+    const btnClose = document.getElementById("btn-format-modal-close");
+    const btnDismiss = document.getElementById("btn-format-modal-dismiss");
+    if (!modal || !promptEl) return;
+
+    function openFormatGuide() {
+      if (typeof modal.showModal === "function") {
+        try {
+          modal.showModal();
+        } catch (e) {
+          modal.setAttribute("open", "");
+        }
+      } else {
+        modal.setAttribute("open", "");
+      }
+    }
+
+    function closeFormatGuide() {
+      if (typeof modal.close === "function") {
+        try {
+          modal.close();
+        } catch (e) {
+          modal.removeAttribute("open");
+        }
+      } else {
+        modal.removeAttribute("open");
+      }
+    }
+
+    btnOpen?.addEventListener("click", () => openFormatGuide());
+
+    btnClose?.addEventListener("click", () => closeFormatGuide());
+
+    btnDismiss?.addEventListener("click", () => {
+      localStorage.setItem(FORMAT_MODAL_DISMISSED, "1");
+      closeFormatGuide();
+    });
+
+    btnCopy?.addEventListener("click", () => {
+      const text = promptEl.value;
+      if (!text) return;
+      const flash = (msg) => {
+        if (toast) toast.textContent = msg;
+      };
+      const clearToastSoon = () => {
+        if (toast) setTimeout(() => { toast.textContent = ""; }, 2800);
+      };
+
+      const fallbackSelectCopy = () => {
+        promptEl.focus();
+        promptEl.select();
+        try {
+          document.execCommand("copy");
+          flash("Copied to clipboard.");
+        } catch (err) {
+          flash("Select the text and copy manually (⌘C / Ctrl+C).");
+        }
+        clearToastSoon();
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          () => {
+            flash("Copied to clipboard.");
+            clearToastSoon();
+          },
+          () => fallbackSelectCopy()
+        );
+      } else {
+        fallbackSelectCopy();
+      }
+    });
+
+    if (!localStorage.getItem(FORMAT_MODAL_DISMISSED)) {
+      requestAnimationFrame(() => openFormatGuide());
+    }
+  }
+
+  initFormatGuide();
   tryRestoreSession();
 })();

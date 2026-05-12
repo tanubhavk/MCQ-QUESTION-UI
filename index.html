@@ -17,6 +17,11 @@
       <header class="header">
         <div class="brand">
           <h1>MCQ practice</h1>
+          <p class="format-guide-row">
+            <button type="button" class="text-link" id="btn-open-format-guide">
+              Copy-ready prompt for ChatGPT / Claude / other AI
+            </button>
+          </p>
           <p class="tagline">
             Paste blocks in your format, then work each item like a real test. Tap an option to see if it is right and reveal the answer key. Your score updates as you go; open “Practice wrong only” to retry questions you missed. Progress and pasted text are saved in this browser so a reload resumes where you left off.
           </p>
@@ -55,6 +60,96 @@
         <ol id="question-list" class="question-list"></ol>
       </main>
     </div>
+
+    <dialog id="format-modal" class="format-modal" aria-labelledby="format-modal-title">
+      <div class="format-modal__inner">
+        <h2 id="format-modal-title" class="format-modal__title">Ask an AI to format your MCQs</h2>
+        <p class="format-modal__lead">
+          Copy the prompt below into any AI chat. Replace the last line with your topic and how many questions you want. Paste the AI’s plain-text reply into the box on this page, then choose “Load questions”.
+        </p>
+        <label for="format-prompt-text" class="format-modal__label">Prompt for the AI</label>
+        <textarea
+          id="format-prompt-text"
+          class="format-modal__textarea"
+          readonly
+          rows="22"
+          spellcheck="false"
+        >You are producing multiple-choice questions as PLAIN TEXT for an MCQ practice app. Follow this structure exactly for every question. Output only the question bank—no introduction, no closing notes.
+
+QUESTION START (use one style per question):
+
+A) Markdown (recommended): a line with three or more # characters, a space, the question number, optional period:
+   ### 1.
+   ### 26
+   Put the question stem on the following lines (after any blank lines). Optional section titles may use one or two # at the start of a line (e.g. ## Module 1); they are not treated as questions.
+
+B) Plain text alternatives:
+   1) stem starts here
+   12. stem starts here
+   Q3) stem starts here
+   question) stem starts here   (case insensitive)
+
+STEM: Continue on extra lines until the options block begins.
+
+OPTIONS: Exactly four choices, labels a–d or A–D. Each option is ONE line: letter, then a delimiter from this set . ) : - – — then spaces, then the option text.
+Examples:
+   A. First option
+   b) Second option
+   c - Third option
+
+Optional: the first option line may begin with "options)" before the letter (e.g. options)a) text).
+
+ANSWER (required, one line per question, immediately after the last option of that question, before the next question starts):
+   Answer: C
+   Answer : C
+   **Answer:** C
+
+After the colon, put either the correct LETTER (A–D) OR the full correct option text (must match that option’s wording).
+
+SEPARATORS: A line containing only --- (three or more dashes) may appear between questions.
+
+STRICT RULES:
+- Every question must end with an Answer line in the forms above.
+- Use exactly four options labeled a–d (or A–D) in order; do not skip letters.
+- Start each new question with a new ### number line or 1) / question) line—never run two stems together.
+- Do not wrap the whole bank in code fences unless the user asks; plain text only.
+
+EXAMPLE OUTPUT (two questions):
+
+### 1.
+
+What is 2 + 2?
+
+A. 3
+B. 4
+C. 5
+D. 6
+
+**Answer:** B
+
+---
+
+### 2.
+
+Capital of France?
+
+a) Berlin
+b) Madrid
+c) Paris
+d) Rome
+
+Answer : c
+
+Now generate [DESCRIBE YOUR TOPIC AND NUMBER OF QUESTIONS HERE].</textarea>
+        <p id="format-copy-toast" class="format-copy-toast" role="status" aria-live="polite"></p>
+        <div class="format-modal__actions">
+          <button type="button" class="btn primary" id="btn-copy-format-prompt">Copy prompt</button>
+          <button type="button" class="btn ghost" id="btn-format-modal-close">Close</button>
+          <button type="button" class="btn ghost" id="btn-format-modal-dismiss">Don’t show again on this device</button>
+        </div>
+      </div>
+    </dialog>
+
     <script src="parser.js"></script>
     <script src="app.js"></script>
   </body>

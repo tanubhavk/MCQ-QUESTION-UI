@@ -45,7 +45,29 @@ body {
   font-weight: 600;
   font-size: 1.65rem;
   letter-spacing: -0.02em;
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.2rem;
+}
+
+.format-guide-row {
+  margin: 0 0 0.45rem;
+}
+
+.text-link {
+  font: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.text-link:hover {
+  color: #163d72;
 }
 
 .tagline {
@@ -336,6 +358,88 @@ body {
   margin: 0;
   font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
   font-size: 0.84rem;
+}
+
+.format-modal {
+  max-width: calc(100vw - 1.5rem);
+  width: min(40rem, 100%);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.format-modal::backdrop {
+  background: rgba(26, 26, 26, 0.42);
+}
+
+.format-modal__inner {
+  padding: 1.2rem 1.25rem 1.35rem;
+  max-height: min(90vh, 52rem);
+  overflow: auto;
+}
+
+.format-modal__title {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0 0 0.45rem;
+  line-height: 1.2;
+}
+
+.format-modal__lead {
+  margin: 0 0 0.85rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.format-modal__label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.81rem;
+  margin-bottom: 0.35rem;
+}
+
+.format-modal__textarea {
+  width: 100%;
+  min-height: 14rem;
+  max-height: min(42vh, 22rem);
+  resize: vertical;
+  font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
+  font-size: 0.74rem;
+  line-height: 1.4;
+  padding: 0.6rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fafaf8;
+  color: var(--ink);
+}
+
+.format-modal__textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.format-copy-toast {
+  min-height: 1.35rem;
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ok);
+}
+
+.format-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+  padding-top: 0.25rem;
+}
+
+body:has(dialog.format-modal[open]) {
+  overflow: hidden;
 }
 
 @media (min-width: 640px) {
