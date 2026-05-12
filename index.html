@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MCQ Practice — Test Layout</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div class="brand">
+          <h1>MCQ practice</h1>
+          <p class="tagline">
+            Paste blocks in your format, then work each item like a real test. Tap an option to see if it is right and reveal the answer key. Your score updates as you go; open “Practice wrong only” to retry questions you missed. Progress and pasted text are saved in this browser so a reload resumes where you left off.
+          </p>
+        </div>
+      </header>
+
+      <section class="input-panel" aria-label="Question source">
+        <label for="raw-input" class="panel-title">Paste your questions</label>
+        <textarea
+          id="raw-input"
+          spellcheck="false"
+          placeholder="Markdown revision pack (### N., A.–D., **Answer:**) or plain format — see Insert sample."
+        ></textarea>
+        <div class="input-actions">
+          <button type="button" id="btn-parse" class="btn primary">Load questions</button>
+          <button type="button" id="btn-sample" class="btn ghost">Insert sample</button>
+        </div>
+        <p id="parse-message" class="parse-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <main id="exam" class="exam" hidden>
+        <div class="exam-toolbar">
+          <span id="exam-count" class="exam-count"></span>
+          <button type="button" id="btn-reset" class="btn ghost small">Edit source text</button>
+        </div>
+        <section id="score-panel" class="score-panel" hidden aria-label="Results summary">
+          <p id="score-line" class="score-line"></p>
+          <p id="score-review-note" class="score-review-note" hidden></p>
+          <div class="score-actions">
+            <button type="button" id="btn-wrong-only" class="btn ghost small" disabled>
+              Practice wrong only (0)
+            </button>
+            <button type="button" id="btn-show-all" class="btn ghost small" hidden>Back to full set</button>
+          </div>
+        </section>
+        <ol id="question-list" class="question-list"></ol>
+      </main>
+    </div>
+    <script src="parser.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
